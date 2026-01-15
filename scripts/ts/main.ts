@@ -2,6 +2,13 @@ import type { Video } from "./Video";
 
 const containerVideos = document.querySelector(".videos__container");
 
+const isBlank = (v: unknown) => v == null || (typeof v === "string" && v.trim() === "");
+
+const missingProperties = (video: Partial<Video>) => {
+  const required: Array<keyof Video> = ["titulo", "descricao", "url", "imagem", "categoria"];
+  return required.filter((key) => isBlank(video[key]));
+};
+
 async function obterVideos() {
   try {
     const busca = await fetch("http://localhost:3000/videos");
@@ -10,6 +17,15 @@ async function obterVideos() {
     console.log("videos:", videos);
 
     videos.forEach((video: Video) => {
+      const missing = missingProperties(video);
+      if (missing.length) {
+        console.log(
+          `Vídeo de id ${video.id} com campo(s) ausente(s): ${missing.join(", ")} \nTítulo: ${
+            video.titulo ?? "(sem título)"
+          }`
+        );
+      }
+
       if (containerVideos) {
         containerVideos.innerHTML += `
             <li class="videos__item">
