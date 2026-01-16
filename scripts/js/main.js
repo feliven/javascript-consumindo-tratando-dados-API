@@ -19,10 +19,17 @@ const preencherCamposVazios = (video) => {
         video.descricao = "[Erro ao carregar descrição]";
     if (!video.categoria)
         video.categoria = "[Categoria ausente]";
+    if (!video.url)
+        video.url = "https://placehold.co/600x400/lightgrey/black?text=[Erro+ao+carregar+vídeo]";
+    if (!video.imagem)
+        video.imagem = "https://placehold.co/100x100/lightgrey/black?text=[Sem+imagem]";
 };
 async function obterVideos() {
-    if (!containerVideos)
+    if (!containerVideos) {
+        alert("Erro ao carregar vídeos.");
+        console.error("Container para vídeos não existe! Confira o código HTML");
         return;
+    }
     try {
         const busca = await fetch("http://localhost:3000/videos");
         if (!busca.ok)
@@ -32,10 +39,8 @@ async function obterVideos() {
         videos.forEach((video) => {
             const missing = missingProperties(video);
             if (missing.length) {
-                console.log(`Vídeo de id ${video.id} com campo(s) ausente(s): ${missing.join(", ")} \nTítulo: ${video.titulo ?? "(sem título)"}`);
+                console.warn(`Vídeo de id ${video.id} com campo(s) ausente(s): ${missing.join(", ")} \nTítulo: ${video.titulo ?? "(sem título)"}`);
             }
-            if (!video.url)
-                return;
             preencherCamposVazios(video);
             containerVideos.innerHTML += `
           <li class="videos__item">
