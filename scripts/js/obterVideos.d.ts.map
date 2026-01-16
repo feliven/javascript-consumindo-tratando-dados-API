@@ -1,1 +1,0 @@
-{"version":3,"file":"obterVideos.d.ts","sourceRoot":"","sources":["../ts/obterVideos.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,KAAK,EAAE,MAAM,SAAS,CAAC;AAErC,qBAAa,SAAS;IACpB,OAAO,CAAC,OAAO,CAA2F;IAS1G,OAAO,CAAC,iBAAiB,CAMvB;IAEF,OAAO,CAAC,qBAAqB,CAW3B;IAEW,gBAAgB,IAAI,OAAO,CAAC,KAAK,EAAE,CAAC;CA4BlD"}

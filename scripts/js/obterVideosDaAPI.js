@@ -51,4 +51,4 @@ export class VideosAPI {
         }
     }
 }
-//# sourceMappingURL=obterVideos.js.map
+//# sourceMappingURL=obterVideosDaAPI.js.map

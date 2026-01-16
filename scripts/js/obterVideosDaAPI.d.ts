@@ -5,4 +5,4 @@ export declare class VideosAPI {
     private preencherCamposVazios;
     obterVideosDaAPI(): Promise<Video[]>;
 }
-//# sourceMappingURL=obterVideos.d.ts.map
+//# sourceMappingURL=obterVideosDaAPI.d.ts.map

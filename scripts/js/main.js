@@ -1,4 +1,4 @@
-import { VideosAPI } from "./obterVideos.js";
+import { VideosAPI } from "./obterVideosDaAPI.js";
 import { BuscarVideos } from "./buscarVideos.js";
 import { FiltrarPorCategoria } from "./filtrarCategoria.js";
 import { renderizarVideos, renderizarErro } from "./renderizarVideos.js";
