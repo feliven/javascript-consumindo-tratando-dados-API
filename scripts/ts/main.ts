@@ -1,39 +1,11 @@
 import { VideosAPI } from "./obterVideos.js";
+import { BuscarVideos } from "./buscarVideos.js";
 
 const videosAPI = new VideosAPI();
 videosAPI.obterVideosDaAPI();
 
-const inputBusca: HTMLInputElement | null = document.querySelector(".pesquisar__input");
-
-if (inputBusca) {
-  inputBusca.addEventListener("input", filtrarBusca);
-} else {
-  console.warn("Input do campo de busca não foi encontrado! Confira o código HTML");
-}
-
-function filtrarBusca() {
-  const videos: NodeListOf<HTMLLIElement> = document.querySelectorAll(".videos__item");
-
-  if (!inputBusca || !inputBusca.value || videos.length === 0) return;
-
-  for (let video of videos) {
-    const tituloVideo: HTMLHeadingElement | null = video.querySelector(".titulo-video");
-
-    if (!tituloVideo) {
-      console.error(`Título não encontrado para vídeo de id ${video.id}`);
-      return;
-    }
-
-    let titulo = tituloVideo.textContent.toLowerCase();
-    let valorFiltro = inputBusca.value.toLowerCase();
-
-    if (!titulo.includes(valorFiltro)) {
-      video.style.display = "none";
-    } else {
-      video.style.display = "block";
-    }
-  }
-}
+const buscarVideos = new BuscarVideos();
+buscarVideos.filtrarBusca();
 
 const botaoCategoria: NodeListOf<HTMLAnchorElement> = document.querySelectorAll(".superior__item");
 
