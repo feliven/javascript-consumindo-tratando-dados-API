@@ -1,11 +1,29 @@
 import { VideosAPI } from "./obterVideos.js";
 import { BuscarVideos } from "./buscarVideos.js";
 import { FiltrarPorCategoria } from "./filtrarCategoria.js";
+import { renderizarVideos, renderizarErro } from "./renderizarVideos.js";
 
-const videosAPI = new VideosAPI();
-videosAPI.obterVideosDaAPI();
+const containerVideos: HTMLUListElement | null = document.querySelector(".videos__container");
 
-const buscarVideos = new BuscarVideos();
-buscarVideos.filtrarBusca();
+const iniciarApp = async () => {
+  if (!containerVideos) {
+    alert("Erro ao carregar vídeos.");
+    console.error("Container para vídeos não existe! Confira o código HTML");
+    return;
+  }
 
-new FiltrarPorCategoria();
+  const videosAPI = new VideosAPI();
+
+  try {
+    const videos = await videosAPI.obterVideosDaAPI();
+    renderizarVideos(videos, containerVideos);
+
+    // Inicializa as funcionalidades de interação apenas DEPOIS que a renderização ocorre
+    new BuscarVideos();
+    new FiltrarPorCategoria();
+  } catch (error) {
+    renderizarErro(error, containerVideos);
+  }
+};
+
+iniciarApp();

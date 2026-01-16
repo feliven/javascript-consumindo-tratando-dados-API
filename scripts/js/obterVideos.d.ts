@@ -1,8 +1,8 @@
+import type { Video } from "./Video";
 export declare class VideosAPI {
-    private containerVideos;
     private isBlank;
     private missingProperties;
     private preencherCamposVazios;
-    obterVideosDaAPI(): Promise<void>;
+    obterVideosDaAPI(): Promise<Video[]>;
 }
 //# sourceMappingURL=obterVideos.d.ts.map

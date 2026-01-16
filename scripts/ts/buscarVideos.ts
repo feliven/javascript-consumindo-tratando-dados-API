@@ -19,7 +19,7 @@ export class BuscarVideos {
 
       if (!tituloVideo) {
         console.error(`Título não encontrado para vídeo de id ${video.id}`);
-        return;
+        continue; // usar continue ao invés de return para não parar o loop inteiro
       }
 
       let titulo = tituloVideo.textContent.toLowerCase();
