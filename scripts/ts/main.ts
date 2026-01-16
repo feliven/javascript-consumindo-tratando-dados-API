@@ -2,10 +2,19 @@ import type { Video } from "./Video";
 
 const containerVideos = document.querySelector(".videos__container");
 
-const isBlank = (v: unknown) => v == null || (typeof v === "string" && v.trim() === "");
+const isBlank = (value: unknown) => value == null || (typeof value === "string" && value.trim() === "");
+
+/*
+v == null -> Returns "true" if the value is null or undefined
+typeof v === "string" && v.trim() === "" -> Returns "true" if the value is a string AND it's empty after removing whitespace
+
+it returns "true" if the value is null, undefined, or an empty/whitespace-only string, and "false" otherwise
+*/
 
 const missingProperties = (video: Partial<Video>) => {
   const required: Array<keyof Video> = ["titulo", "descricao", "url", "imagem", "categoria"];
+  /* TypeScript will catch if you misspell a field name or if the Video interface changes, since the array must match keyof Video
+   */
   return required.filter((key) => isBlank(video[key]));
 };
 
