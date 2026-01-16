@@ -13,16 +13,18 @@ const missingProperties = (video) => {
     return required.filter((key) => isBlank(video[key]));
 };
 const preencherCamposVazios = (video) => {
+    const placeholderImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect fill='%23d3d3d3' width='100' height='100'/%3E%3Ctext x='50' y='50' font-size='12' fill='%23000' text-anchor='middle' dy='.3em'%3E[Sem imagem]%3C/text%3E%3C/svg%3E";
+    const placeholderVideo = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect fill='%23d3d3d3' width='600' height='400'/%3E%3Ctext x='150' y='100' font-size='24' fill='%23000' text-anchor='middle' dy='.3em'%3EErro ao carregar video%3C/text%3E%3C/svg%3E";
     if (!video.titulo)
         video.titulo = "[Erro ao carregar título]";
     if (!video.descricao)
         video.descricao = "[Erro ao carregar descrição]";
     if (!video.categoria)
         video.categoria = "[Categoria ausente]";
+    if (!video.imagem)
+        video.imagem = placeholderImage;
     if (!video.url)
         video.url = "https://placehold.co/600x400/lightgrey/black?text=[Erro+ao+carregar+vídeo]";
-    if (!video.imagem)
-        video.imagem = "https://placehold.co/100x100/lightgrey/black?text=[Sem+imagem]";
 };
 async function obterVideos() {
     if (!containerVideos) {
