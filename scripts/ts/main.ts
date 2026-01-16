@@ -28,7 +28,7 @@ const preencherCamposVazios = (video: Video) => {
   if (!video.descricao) video.descricao = "[Erro ao carregar descrição]";
   if (!video.categoria) video.categoria = "[Categoria ausente]";
   if (!video.imagem) video.imagem = placeholderImage;
-  if (!video.url) video.url = "https://placehold.co/600x400/lightgrey/black?text=[Erro+ao+carregar+vídeo]";
+  if (!video.url) video.url = "https://placehold.co/700x400/lightgrey/black?text=[Erro+ao+carregar+vídeo]";
 };
 
 async function obterVideos() {
@@ -84,17 +84,16 @@ obterVideos();
 
 const inputBusca: HTMLInputElement | null = document.querySelector(".pesquisar__input");
 
-function filtrarBusca() {
-  if (inputBusca) {
-    inputBusca.addEventListener("input", filtrarBusca);
-  } else {
-    console.warn("Input do campo de busca não foi encontrado! Confira o código HTML");
-    return;
-  }
+if (inputBusca) {
+  inputBusca.addEventListener("input", filtrarBusca);
+} else {
+  console.warn("Input do campo de busca não foi encontrado! Confira o código HTML");
+}
 
+function filtrarBusca() {
   const videos: NodeListOf<HTMLLIElement> = document.querySelectorAll(".videos__item");
 
-  if (!inputBusca.value || videos.length === 0) return;
+  if (!inputBusca || !inputBusca.value || videos.length === 0) return;
 
   for (let video of videos) {
     const tituloVideo: HTMLHeadingElement | null = video.querySelector(".titulo-video");
@@ -139,5 +138,17 @@ function filtrarPorCategoria(filtro: string) {
   if (videos.length === 0) return;
 
   for (let video of videos) {
+    const categoriaVideo: HTMLParagraphElement | null = video.querySelector(".categoria");
+
+    if (!categoriaVideo) return;
+
+    let categoria = categoriaVideo.textContent.toLowerCase();
+    let valorFiltro = filtro.toLowerCase();
+
+    if (!categoria.includes(valorFiltro) && valorFiltro != "tudo") {
+      video.style.display = "none";
+    } else {
+      video.style.display = "block";
+    }
   }
 }
