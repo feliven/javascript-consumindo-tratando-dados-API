@@ -12,24 +12,39 @@ export class BuscarVideos {
   public filtrarBusca() {
     const videos: NodeListOf<HTMLLIElement> = document.querySelectorAll(".videos__item");
 
-    if (!this.inputBusca || !this.inputBusca.value || videos.length === 0) return;
+    if (videos.length === 0) return;
 
-    for (let video of videos) {
+    videos.forEach((video) => {
       const tituloVideo: HTMLHeadingElement | null = video.querySelector(".titulo-video");
 
       if (!tituloVideo) {
         console.error(`Título não encontrado para vídeo de id ${video.id}`);
-        continue; // usar continue ao invés de return para não parar o loop inteiro
+        return;
       }
+
+      if (!this.inputBusca || !this.inputBusca.value) return;
 
       let titulo = tituloVideo.textContent.toLowerCase();
       let valorFiltro = this.inputBusca.value.toLowerCase();
 
-      if (!titulo.includes(valorFiltro)) {
-        video.style.display = "none";
-      } else {
-        video.style.display = "block";
-      }
-    }
+      video.style.display = valorFiltro ? (titulo.includes(valorFiltro) ? "block" : "none") : "block";
+
+      /*
+      First condition (valorFiltro ?): Checks if there's a search value
+      If valorFiltro is empty/null/undefined → display is set to "block" (show all videos)
+
+      Second condition (nested): If valorFiltro exists, checks if the video title contains the search term
+
+      titulo.includes(valorFiltro) returns true → display is set to "block" (show video)
+      titulo.includes(valorFiltro) returns false → display is set to "none" (hide video)
+      */
+
+      // Original:
+      // if (!titulo.includes(valorFiltro)) {
+      //   video.style.display = "none";
+      // } else {
+      //   video.style.display = "block";
+      // }
+    });
   }
 }
